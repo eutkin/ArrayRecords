@@ -27,7 +27,7 @@ public class ArrayRecords implements Records {
 
     private int size = 0;
 
-    public static ArrayRecords create() {
+    public static Records create() {
         return new ArrayRecords();
     }
 
@@ -209,5 +209,25 @@ public class ArrayRecords implements Records {
             }
             this.values[i] = value;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayRecords records = (ArrayRecords) o;
+        return size == records.size &&
+                Arrays.equals(timestamps, records.timestamps) &&
+                Arrays.equals(ids, records.ids) &&
+                Arrays.equals(values, records.values);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(size);
+        result = 31 * result + Arrays.hashCode(timestamps);
+        result = 31 * result + Arrays.hashCode(ids);
+        result = 31 * result + Arrays.hashCode(values);
+        return result;
     }
 }
